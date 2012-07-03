@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html> 
+<html> 
+	<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+	<title>发送邮件</title> 
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+  <script src="../phonegap-1.1.0.js"></script>
+  <script src="../barcodescanner.js"></script>
+  <script src="../peopleassign.js"></script>
+  
+	<script language="javascript" type="text/javascript">
+
+//Test function with post method
+var xmlhttp;
+function sendEmail()
+{
+/*	
+	 try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    } catch (e) {
+        alert("Permission UniversalBrowserRead denied.");
+    }
+    */
+    
+    	recvAddrs = document.getElementById("recvAddrs").value;
+    	subject = document.getElementById("subject").value;
+    	mailText = document.getElementById("mailText").value;
+    	bccAddrs = document.getElementById("bccAddrs").value;
+  //  	alert(recvAddrs + " " + subject + " " + mailText);
+	/* 	if(recvAddrs=="") {
+			window.alert("文档目录不能为空。");
+			document.getElementById("docDir").focus();
+			return false;
+		}
+		else if(indexDir=="")
+		{
+			window.alert("索引目录不能为空。");
+			document.getElementById("IndexDir").focus();
+			return false;
+		}
+		else {
+			sendRequest();
+		} */
+    
+	var data;
+	data = '<?xml version="1.0" encoding="utf-8"?>';
+	data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+	data = data + '<soap:Body>';
+	data = data + '<p:sendEmail xmlns:p="http://services.mashup.wso2.org/sendEmail?xsd"> ';
+	data = data + '<recvAddrs></recvAddrs>';
+	data = data + '<recvAddrsArray>' + recvAddrs + '</recvAddrsArray>';
+	data = data + '<ccAddrs></ccAddrs>';
+	data = data + '<ccAddrsArray></ccAddrsArray>';
+	data = data + '<bccAddrs></bccAddrs>';
+	data = data + '<bccAddrsArray> ' + bccAddrs + '</bccAddrsArray>'
+	data = data + '<subject>' + subject + '</subject>';
+	data = data + '<content>' + mailText + '</content>';
+	data = data + '</p:sendEmail>';
+	data = data + '</soap:Body>';
+	data = data + '</soap:Envelope>';
+	xmlhttp = getXMLHttpRequest();
+	var URL="http://59.64.156.153:9763/services/admin/sendEmail.SOAP12Endpoint";
+	xmlhttp.open("POST",URL, false);
+	xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+	xmlhttp.setRequestHeader ("SOAPAction","urn:sendEmail");
+//	alert(data);
+	xmlhttp.send(data);
+//	alert(xmlhttp.responseXML.xml);
+//	show_data();
+}
+function getXMLHttpRequest() 
+{
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else {
+        try {
+            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+        }
+        catch(ex) {
+            return null;
+        }
+    }
+}
+
+</script>
+
+
+</head> 
+<body> 
+ 
+	<div data-role="page" class="indexpage"> 
+		
+		<div class="jqmheader" data-role="header" data-position="inline">
+			<div class="titletext"><span>发送邮件</span></div>
+		</div>
+ 	<p>&nbsp;
+		<div data-role="content" data-inset="true">  
+		
+			<form action="#" method="get"> 
+	 
+				<div data-role="fieldcontain" class="jqmlistview"> 
+		         <label for="recvAddrs" class="emaillabel">收件人:</label>
+		         <input type="email" name="recvAddrs" id="recvAddrs" value="mashupForDemo@gmail.com" />
+				</div> 
+	 
+	 			<div data-role="fieldcontain" class="jqmlistview"> 
+		         <label for="bccAddrs" class="emaillabel">抄送:</label>
+		         <input type="email" name="bccAddrs" id="bccAddrs" value="mashupForDemo@gmail.com" />
+				</div> 
+	 			<div data-role="fieldcontain" data-theme="b" class="jqmlistview"> 
+		         <label for="subject" class="emaillabel">邮件主题:</label> 
+		         <input type="text" name="subject" id="subject" value="test"  /> 
+				</div> 
+				
+				<div data-role="fieldcontain" class="jqmlistview"> 
+					<label for="mailText" class="emaillabel">邮件正文:</label> 
+					<textarea cols="40" rows="80" name="mailText" id="mailText" value="nothing in this Email"></textarea> 
+				</div> 
+				
+	 	
+		<div class="backhome"><input type="button" value="Submit" data-theme="e" onclick="sendEmail();" class="backhome"/></div>
+
+		
+		</form> 
+		
+		<div id="result" style="visibility: hidden">
+					</div>
+		</div><!--/content-primary -->		
+</div> 
+	
+</div><!-- /page --> 
+ 
+</body> 
+</html> 

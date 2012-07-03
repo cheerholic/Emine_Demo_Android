@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="height=1644,width=599" />
+<title>系统功能引导</title>
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+  <script src="../phonegap-1.1.0.js"></script>
+  <script src="../peopleassign.js"></script>
+  <script src="../dangercheck.js"></script>
+  <script language="javascript" type="text/javascript">
+function peopleAssign(){
+	window.plugins.peopleAssign.assign(); 
+} 
+
+function dangerCheck(){
+	window.plugins.dangerCheck.check(); 
+} 
+</script>
+  
+</head>
+
+
+
+
+<div class="indexpage" data-role="page" id="index">
+	<div class="jqmheader" data-role="header" data-position="inline">
+		<div class="titletext"><span>系统引导视图</span></div>
+	</div>
+
+	<div data-role="content" data-inset="true">	
+		<div class="sysnavbutton" name="sysnavbutton">
+			<a href="SafetyProduct.html" data-ajax="false"><img src="img/search.png"></a>
+			<div class="sysnavtext"><span>安全生产</span></div>
+		</div>
+		<div class="sysnavbutton" name="sysnavbutton">
+			<a href="DailyProduct.html" data-ajax="false"><img src="img/data.png"></a>
+			<div style="margin-left:-10px;" class="sysnavtext"><span>生产日报</span></div>
+		</div>
+		<div class="sysnavbutton" name="sysnavbutton">
+			<a href="MainProject.html" data-ajax="false"><img src="img/project.png"></a>
+			<div style="margin-left:-10px;" class="sysnavtext"><span>重点工程</span></div>
+
+		</div>
+		<div style="clear:left;margin-top:30px;" class="sysnavbutton" name="sysnavbutton">
+			<img src="img/fire.png" data-ajax="false" onclick="dangerCheck();">
+			<div class="sysnavtext"><span>隐患排查</span></div>
+		</div>
+		<div style="margin-top:30px;" class="sysnavbutton" name="sysnavbutton">
+			<img src="img/people.png" data-ajax="false" onclick="peopleAssign();">
+			<div class="sysnavtext"><span>人员定位</span></div>
+
+		</div>
+		<div style="margin-top:30px;" class="sysnavbutton" name="sysnavbutton">
+			<a href="email_im.html" data-ajax="false"><img src="img/mail.png"></a>
+			<div class="sysnavtext"><span>通告发布</span></div>
+		</div>
+	</div><!-- /content -->
+</div><!-- /page -->

@@ -1,0 +1,156 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+<title>立业公司查询</title>
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+<script language="javascript" type="text/javascript">
+function sub(){}
+
+var xmlhttp;
+function RequestByPost()
+{
+var data;
+data = '<?xml version="1.0" encoding="utf-8"?>';
+data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+data = data + '<soap:Body>';
+data = data + '<p:checkImp xmlns:p="http://ws.wso2.org/dataservice">';
+data = data + '<xs:date xmlns:xs="http://ws.wso2.org/dataservice">' + '2011-12-22' + '</xs:date>';
+data = data + '<xs:stage xmlns:xs="http://ws.wso2.org/dataservice">' + '1' + '</xs:stage>';
+data = data + '<xs:id xmlns:xs="http://ws.wso2.org/dataservice">' + '6' + '</xs:id>';
+data = data + '</p:checkImp>';
+data = data + '</soap:Body>';
+data = data + '</soap:Envelope>';
+xmlhttp = getXMLHttpRequest();
+var URL="http://59.64.156.153:9763/services/jsmk.SOAP12Endpoint";
+xmlhttp.open("POST",URL, false);
+xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+xmlhttp.setRequestHeader ("SOAPAction","urn:checkImp");
+xmlhttp.send(data);
+//alert(xmlhttp.responseXML.xml);
+show_data();
+}
+
+function getXMLHttpRequest() 
+{
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else {
+        try {
+            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+        }
+        catch(ex) {
+            return null;
+        }
+    }
+}
+
+function get_id(xml){
+	//alert(xml);
+
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("id");
+  //alert(elements.length);
+  //alert(elements);
+  return elements[0].firstChild.nodeValue;
+
+}
+
+function get_name(xml){
+
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("name");
+  return elements[0].firstChild.nodeValue;
+
+  }
+
+function get_statement(xml){
+//	alert("get_value is invoking~~");
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("statement");
+ // alert(elements[0].firstChild.nodeValue);
+  return elements[0].firstChild.nodeValue;
+}
+
+function get_date(xml){
+//	alert("get_type is invoking~~");
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("date");
+//  alert(elements[0].firstChild.nodeValue);
+  return elements[0].firstChild.nodeValue;
+}
+
+function get_stage(xml){
+//	alert("get_type is invoking~~");
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("stage");
+//  alert(elements[0].firstChild.nodeValue);
+  return elements[0].firstChild.nodeValue;
+}
+
+function show_data(){
+	id_temp = get_id(xmlhttp.responseXML);
+	name_temp = get_name(xmlhttp.responseXML);
+    statement_temp = get_statement(xmlhttp.responseXML);
+	date_temp = get_date(xmlhttp.responseXML);
+	stage_temp = get_stage(xmlhttp.responseXML);
+	document.getElementById("result").style.visibility='visible';
+	$("#id0").html(id_temp);
+	$("#name0").html(name_temp);
+	$("#statement0").html(statement_temp);
+	$("#date0").html(date_temp);
+	$("#stage0").html(stage_temp);
+    
+	
+}
+
+</script>
+</head>
+<body>
+	<div data-role="page" class="indexpage" id="page-about">
+		<div class="jqmheader" data-role="header" data-position="inline">
+		     <div class="titletext"><span>立业公司查询</span></div>
+	  </div>
+	  <div data-role="page" class="type-index" id="page-about">
+		   <script type="text/javascript">
+		$(document).ready (
+			function ()
+			{
+				RequestByPost();
+			}
+		);
+		   </script>
+	  </div>	
+	  <p>&nbsp;
+	      <div data-role="content" data-inset="true">	
+	             <div class="ui-grid-d" id="result"> 
+	                  <div class="showdatalistview02"> 
+                        <div class="ui-block-a"><div class="ui-bar ui-bar-e titleheight">工程编号</div></div> 
+				        <div class="ui-block-b"><div class="ui-bar ui-bar-e titleheight">工程名称</div></div>
+		                <div class="ui-block-c"><div class="ui-bar ui-bar-e titleheight">工程内容</div></div>
+                        <div class="ui-block-d"><div class="ui-bar ui-bar-e titleheight">查询日期</div></div>
+                        <div class="ui-block-e"><div class="ui-bar ui-bar-e titleheight">查询班数</div></div>
+                    </div>
+                    <div class="showdatalistview02">
+					              <div class="ui-block-a"><div class="ui-bar ui-bar-b dataheight03" id="id0"></div></div> 
+					              <div class="ui-block-b"><div class="ui-bar ui-bar-b dataheight03" id="name0"></div></div> 
+					              <div class="ui-block-c"><div class="ui-bar ui-bar-b dataheight03" id="statement0"></div></div>
+					              <div class="ui-block-d"><div class="ui-bar ui-bar-b dataheight03" id="date0"></div></div>  
+					              <div class="ui-block-e"><div class="ui-bar ui-bar-b dataheight03" id="stage0"></div></div>
+				            </div>
+               </div>
+	      </div>		
+  </div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html> 
+<html> 
+	<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+	<title>发送MSN</title> 
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+	<script language="javascript" type="text/javascript">
+
+//Test function with post method
+var xmlhttp;
+function sendEmail()
+{
+/*	
+	 try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    } catch (e) {
+        alert("Permission UniversalBrowserRead denied.");
+    }
+    */
+    
+    	to = document.getElementById("to").value;
+    	text = document.getElementById("text").value;
+	/* 	if(recvAddrs=="") {
+			window.alert("文档目录不能为空。");
+			document.getElementById("docDir").focus();
+			return false;
+		}
+		else if(indexDir=="")
+		{
+			window.alert("索引目录不能为空。");
+			document.getElementById("IndexDir").focus();
+			return false;
+		}
+		else {
+			sendRequest();
+		} */
+    
+	var data;
+	data = '<?xml version="1.0" encoding="utf-8"?>';
+	data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+	//data = data + '<s:Header>';
+	//data = data + '<wsa:To>http://59.64.156.153:9763/services/admin/sendIM.SOAP12Endpoint/</wsa:To>';
+	//data = data + '<wsa:ReplyTo><wsa:Address>http://www.w3.org/2005/08/addressing/anonymous</wsa:Address></wsa:ReplyTo>';
+	//data = data + '<wsa:MessageID>http://identifiers.wso2.com/messageid/1330518015696/2110993550</wsa:MessageID>';
+    //data = data + '<wsa:Action>urn:loginIM</wsa:Action>';
+	//data = data + '</s:Header>';
+	data = data + '<soap:Body>';
+	data = data + '<p:sendIM xmlns:p="http://services.mashup.wso2.org/sendIM?xsd">';
+	data = data + '<sendAddr>' + to + '</sendAddr>';
+	data = data + '<msg>' + text + '</msg>';
+	data = data + '</p:sendIM>';
+	data = data + '</soap:Body>';
+	data = data + '</soap:Envelope>';
+	xmlhttp = getXMLHttpRequest();
+	var URL="http://59.64.156.153:9763/services/admin/sendIM.SOAP12Endpoint";
+	xmlhttp.open("POST",URL, false);
+	xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+	xmlhttp.setRequestHeader ("SOAPAction","urn:sendIM");
+	alert(data);
+	xmlhttp.send(data);
+	alert(xmlhttp.responseXML.xml);
+	get_return(xmlhttp.responseXML);
+//	show_data();
+}
+//function sendIm(){}
+function get_return(xml){
+//	alert("get_date is invoking~~");
+	var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("return");
+  //alert(elements[0].firstChild.nodeValue.toString());
+  if(elements[0].firstChild.nodeValue != "true"){
+  alert("发送失败");
+  }else{
+  alert("发送成功");
+  }
+  //return elements[0].firstChild.nodeValue;
+}
+
+function getXMLHttpRequest() 
+{
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else {
+        try {
+            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+        }
+        catch(ex) {
+            return null;
+        }
+    }
+}
+
+function logout()
+{
+
+	var data;
+	data = '<?xml version="1.0" encoding="utf-8"?>';
+	data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+	//data = data + '<s:Header>';
+	//data = data + '<wsa:To>http://59.64.156.153:9763/services/admin/sendIM.SOAP12Endpoint/</wsa:To>';
+	//data = data + '<wsa:ReplyTo><wsa:Address>http://www.w3.org/2005/08/addressing/anonymous</wsa:Address></wsa:ReplyTo>';
+	//data = data + '<wsa:MessageID>http://identifiers.wso2.com/messageid/1330518015696/2110993550</wsa:MessageID>';
+    //data = data + '<wsa:Action>urn:loginIM</wsa:Action>';
+	//data = data + '</s:Header>';
+	data = data + '<soap:Body>';
+	data = data + '<p:disconIM xmlns:p="http://services.mashup.wso2.org/sendIM?xsd">';
+	//data = data + '<sendAddr>lpbupt@hotmail.com</sendAddr>';
+	//data = data + '<msg>Test</msg>';
+	data = data + '</p:disconIM>';
+	data = data + '</soap:Body>';
+	data = data + '</soap:Envelope>';
+	xmlhttp = getXMLHttpRequest();
+	var URL="http://59.64.156.153:9763/services/admin/sendIM.SOAP12Endpoint";
+	xmlhttp.open("POST",URL, false);
+	xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+	xmlhttp.setRequestHeader ("SOAPAction","urn:disconIM");
+	alert(data);
+	xmlhttp.send(data);
+	alert(xmlhttp.responseXML.xml);
+	get_logout_return(xmlhttp.responseXML);
+//	show_data();
+}
+
+function get_logout_return(xml){
+//	alert("get_date is invoking~~");
+var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("return/");
+  
+  if(elements[0].firstChild.nodeValue != null){
+  alert("注销失败");
+  }else{
+  alert("注销成功");
+  self.location="logIM.html";
+  }
+  //return elements[0].firstChild.nodeValue;
+}
+</script>
+</head> 
+<body> 
+<!--
+<script type="text/javascript">
+
+		$(document).ready (
+			function ()
+			{
+				sendEmail();
+			}
+		);
+		</script>
+ -->
+<div data-role="page" class="indexpage"> 
+		
+		<div class="jqmheader" data-role="header" data-position="inline">
+			<div class="titletext"><span>发送MSN消息</span></div>
+		</div>
+ 		<p>&nbsp;
+		<div data-role="content" data-inset="true">  
+			
+		
+			<form action="#" method="get"> 
+	 
+				<div data-role="fieldcontain" class="jqmlistview"> 
+		         <label for="to" class="emaillabel">收信人:</label>
+		         <input type="email" name="to" id="to" value="lpbupt@hotmail.com" />
+				</div> 
+	 
+	 			<div data-role="fieldcontain" class="jqmlistview"> 
+					<label for="text" class="emaillabel">消息内容:</label> 
+					<textarea cols="40" rows="80" name="text" id="text" value="nothing in this message"></textarea> 
+				</div> 
+				
+	 	
+				<div class="backhome"><input type="button" value="Submit" data-theme="e" onclick="sendEmail();" class="backhome"/></div>
+				<div class="backhome"><input type="button" value="logout" data-theme="e" onclick="logout();" class="backhome"/></div>
+				
+		
+			</form> 
+		
+		<div id="result" style="visibility: hidden">
+					</div>
+		</div><!--/content-primary -->		
+</div> 
+	
+</div><!-- /page --> 
+  
+ 
+</body> 
+</html> 

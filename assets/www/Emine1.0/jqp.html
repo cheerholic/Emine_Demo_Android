@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+	
+	<title>Pie Charts and Options</title>
+
+    <link class="include" rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/examples.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/syntaxhighlighter/styles/shCoreDefault.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/syntaxhighlighter/styles/shThemejqPlot.min.css" />
+  <link href="css/ListView.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+	<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
+
+    
+   
+</head>
+<body>
+
+	<div data-role="page" class="indexpage"" id="page-about">
+		<div class="jqmheader" data-role="header" data-position="inline">
+			<div class="titletext"><span>一季度产量统计</span></div>
+		</div>
+<p>&nbsp;
+<!-- Example scripts go here -->
+
+    <div id="pie1" style="margin-top:150px; margin-left:100px; width:600px; height:800px;"></div>
+
+
+
+
+  
+<script class="code" type="text/javascript">$(document).ready(function(){
+    var plot1 = $.jqplot('pie1', [[['一月',25],['二月',14],['三月',7]]], {
+        gridPadding: {top:0, bottom:38, left:0, right:0},
+        seriesDefaults:{
+            renderer:$.jqplot.PieRenderer, 
+            trendline:{ show:false }, 
+            rendererOptions: { padding: 8, showDataLabels: true }
+        },
+        legend:{
+            show:true, 
+            placement: 'outside', 
+            rendererOptions: {
+                numberRows: 1
+            }, 
+            location:'s',
+            marginTop: '15px'
+        }       
+    });
+});</script>
+
+
+
+
+<!-- End example scripts -->
+
+<!-- Don't touch this! -->
+
+
+    <script class="include" type="text/javascript" src="js/jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="js/syntaxhighlighter/scripts/shCore.min.js"></script>
+    <script type="text/javascript" src="js/syntaxhighlighter/scripts/shBrushJScript.min.js"></script>
+    <script type="text/javascript" src="js/syntaxhighlighter/scripts/shBrushXml.min.js"></script>
+<!-- End Don't touch this! -->
+
+<!-- Additional plugins go here -->
+
+  <script class="include" type="text/javascript" src="js/plugins/jqplot.pieRenderer.min.js"></script>
+
+<!-- End additional plugins -->
+
+
+	</div>	
+	<script type="text/javascript" src="js/example.min.js"></script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,158 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+<title>123上02辅顺南迎头</title>
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+<script language="javascript" type="text/javascript">
+function sub(){}
+
+
+
+//Test function with post method
+var xmlhttp;
+function RequestByPost()
+{
+/*	
+	 try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    } catch (e) {
+        alert("Permission UniversalBrowserRead denied.");
+    }
+    */
+	var data;
+	data = '<?xml version="1.0" encoding="utf-8"?>';
+	data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+	data = data + '<soap:Body>';
+	data = data + '<p:getSensorByName xmlns:p="http://ws.wso2.org/dataservice">';
+	data = data + '<xs:id xmlns:xs="http://ws.wso2.org/dataservice">' + '4' + '</xs:id>';
+	data = data + '</p:getSensorByName>';
+	data = data + '</soap:Body>';
+	data = data + '</soap:Envelope>';
+	xmlhttp = getXMLHttpRequest();
+	var URL="http://59.64.156.153:9763/services/jsmk.SOAP12Endpoint";
+	xmlhttp.open("POST",URL, false);
+	xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+	xmlhttp.setRequestHeader ("SOAPAction","urn:getSensorByName");
+	xmlhttp.send(data);
+//	alert(xmlhttp.responseXML);
+	show_data();
+}
+function getXMLHttpRequest() 
+{
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else {
+        try {
+            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+        }
+        catch(ex) {
+            return null;
+        }
+    }
+}
+
+function get_date(xml){
+//	alert("get_date is invoking~~");
+	var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("date");
+  return elements[0].firstChild.nodeValue;
+}
+
+function get_name(xml){
+//	alert("get_name is invoking~~");
+	var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("name");
+//  alert(elements);
+//  alert(name_elements[0].firstChild.nodeValue);
+//  alert(elements[0].firstChild);
+ // alert(elements[0].firstChild.nodeValue);
+  return elements[0].firstChild.nodeValue;
+}
+
+function get_value(xml){
+//	alert("get_value is invoking~~");
+	var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("value");
+ // alert(elements[0].firstChild.nodeValue);
+  return elements[0].firstChild.nodeValue;
+}
+
+function get_type(xml){
+//	alert("get_type is invoking~~");
+	var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("type");
+//  alert(elements[0].firstChild.nodeValue);
+  return elements[0].firstChild.nodeValue;
+}
+
+function show_data(){
+	name_temp = get_name(xmlhttp.responseXML);
+	type_temp = get_type(xmlhttp.responseXML);
+	date_temp = get_date(xmlhttp.responseXML);
+	value_temp = get_value(xmlhttp.responseXML);
+	document.getElementById("result").style.visibility='visible';
+	$("#name0").html(name_temp);
+	$("#type0").html(type_temp);
+	$("#date0").html(date_temp);
+	$("#value0").html(value_temp);
+	
+}
+
+</script>
+</head>
+<body>
+	
+	<div data-role="page" class="indexpage" id="page-about">
+		<div class="jqmheader" data-role="header" data-position="inline">
+			<div class="titletext"><span>123上02辅顺南迎头</span></div>
+		</div>
+	<p>&nbsp;
+		<script type="text/javascript">
+		$(document).ready (
+			function ()
+			{
+				RequestByPost();
+			}
+		);
+		</script>
+		
+		<div data-role="content" data-inset="true">	
+			<div class="ui-grid-d" id="result"> 
+				<div class="showdatalistview">
+					<div class="ui-block-a"><div class="ui-bar ui-bar-e titleheight" >监测点名称</div></div> 
+					<div class="ui-block-b"><div class="ui-bar ui-bar-e titleheight" >监测点类型</div></div>
+					<div class="ui-block-c"><div class="ui-bar ui-bar-e titleheight" >监测点数据</div></div> 
+					<div class="ui-block-d"><div class="ui-bar ui-bar-e titleheight" >日期和时间</div></div>
+				</div>
+				<div class="showdatalistview">
+					<div class="ui-block-a"><div class="ui-bar ui-bar-b dataheight" id="name0"></div></div> 
+					<div class="ui-block-b"><div class="ui-bar ui-bar-b dataheight" id="type0"></div></div> 
+					<div class="ui-block-c"><div class="ui-bar ui-bar-b dataheight" id="value0"></div></div>
+					<div class="ui-block-d"><div class="ui-bar ui-bar-b dataheight" id="date0"></div></div>  
+				</div>	
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        

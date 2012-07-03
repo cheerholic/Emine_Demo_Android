@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html> 
+<html> 
+	<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+	<title>发送邮件</title> 
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+	<script language="javascript" type="text/javascript">
+
+//Test function with post method
+var xmlhttp;
+function sendEmail()
+{
+/*	
+	 try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    } catch (e) {
+        alert("Permission UniversalBrowserRead denied.");
+    }
+    */
+    
+    	name = document.getElementById("name").value;
+    	passwd = document.getElementById("passwd").value;
+//    	alert(recvAddrs + " " + subject + " " + mailText);
+	/* 	if(recvAddrs=="") {
+			window.alert("文档目录不能为空。");
+			document.getElementById("docDir").focus();
+			return false;
+		}
+		else if(indexDir=="")
+		{
+			window.alert("索引目录不能为空。");
+			document.getElementById("IndexDir").focus();
+			return false;
+		}
+		else {
+			sendRequest();
+		} */
+    
+	var data;
+	data = '<?xml version="1.0" encoding="utf-8"?>';
+	data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+	//data = data + '<s:Header>';
+	//data = data + '<wsa:To>http://59.64.156.153:9763/services/admin/sendIM.SOAP12Endpoint/</wsa:To>';
+	//data = data + '<wsa:ReplyTo><wsa:Address>http://www.w3.org/2005/08/addressing/anonymous</wsa:Address></wsa:ReplyTo>';
+	//data = data + '<wsa:MessageID>http://identifiers.wso2.com/messageid/1330518015696/2110993550</wsa:MessageID>';
+    //data = data + '<wsa:Action>urn:loginIM</wsa:Action>';
+	//data = data + '</s:Header>';
+	data = data + '<soap:Body>';
+	data = data + '<p:loginIM xmlns:p="http://services.mashup.wso2.org/sendIM?xsd">';
+	data = data + '<usr>' + name + '</usr>';
+	data = data + '<pswd>' + passwd + '</pswd>';
+	data = data + '</p:loginIM>';
+	data = data + '</soap:Body>';
+	data = data + '</soap:Envelope>';
+	xmlhttp = getXMLHttpRequest();
+	var URL="http://59.64.156.153:9763/services/admin/sendIM.SOAP12Endpoint";
+	xmlhttp.open("POST",URL, false);
+	xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+	xmlhttp.setRequestHeader ("SOAPAction","urn:loginIM");
+//	alert(data);
+	xmlhttp.send(data);
+//	alert(xmlhttp.responseXML.xml);
+	//show_data();
+	get_return(xmlhttp.responseXML);
+}
+//function sendIm(){}
+function get_return(xml){
+//	alert("get_date is invoking~~");
+	var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("return/");
+  
+  if(elements[0].firstChild.nodeValue != null){
+  alert("登录失败");
+  }else{
+  alert("登陆成功");
+  self.location="sendMSN.html";
+  }
+  //return elements[0].firstChild.nodeValue;
+}
+
+function getXMLHttpRequest() 
+{
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else {
+        try {
+            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+        }
+        catch(ex) {
+            return null;
+        }
+    }
+}
+
+</script>
+</head> 
+<body> 
+<!--
+<script type="text/javascript">
+		$(document).ready (
+			function ()
+			{
+				sendEmail();
+			}
+		);
+		</script>
+ -->
+	<div data-role="page" class="indexpage"> 
+		
+		<div class="jqmheader" data-role="header" data-position="inline">
+			<div class="titletext"><span>登录MSN</span></div>
+		</div>
+ 	<p>&nbsp;
+		<div data-role="content" data-inset="true">  
+			
+		
+			<form action="#" method="get"> 
+	 
+				<div data-role="fieldcontain" class="jqmlistview"> 
+		         <label for="name" class="emaillabel">MSN用户名:</label>
+		         <input type="email" name="name" id="name" value="mashupForDemo@gmail.com" />
+				</div> 
+	 
+	 			<div data-role="fieldcontain" class="jqmlistview"> 
+		         <label for="passwd" class="emaillabel">MSN密码:</label> 
+		         <input type="password" name="passwd" id="passwd" value="!@#$%12345qwert"  /> 
+				</div> 
+				
+	 	
+				<div class="backhome"><input type="button" value="Submit" data-theme="e" onclick="sendEmail();" class="backhome"/></div>
+			
+		
+			</form> 
+		</div><!--/content-primary -->		
+</div> 
+	
+</div><!-- /page --> 
+ 
+</body> 
+</html> 

@@ -1,0 +1,10 @@
+.ListView {
+	font-family: "ĞÂËÎÌå";
+	font-size: 100%;
+	color: #0033FF;
+	background-color: #CCFF66;
+	overflow: auto;
+	position: relative;
+	height: 50%;
+	width: 100%;
+}

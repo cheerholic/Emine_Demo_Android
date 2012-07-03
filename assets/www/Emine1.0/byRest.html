@@ -1,0 +1,156 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="Content-Type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="height=822,width=599" />
+<title>按照库存查询（单位：t）</title>
+<link href="css/ListView.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jquery.mobile-1.0rc2.min.css" /> 
+<link rel="stylesheet" href="css/style.css" /> 
+  <script src="js/jquery-mobile/jquery-1.5.js"></script> 
+  <script src="js/jquery-mobile/jquery.mobile-1.0rc2.min.js"></script>
+<script language ="javascript" type="text/javascript">
+function sub(){}
+
+var xmlhttp;
+function RequestByPost()
+{
+var data;
+data = '<?xml version="1.0" encoding="utf-8"?>';
+data = data + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+data = data + '<soap:Body>';
+data = data + '<p:getRepo xmlns:p="http://ws.wso2.org/dataservice">';
+data = data + '<xs:date xmlns:xs="http://ws.wso2.org/dataservice">' + '2011-12-22' + '</xs:date>';
+data = data + '</p:getRepo>';
+data = data + '</soap:Body>';
+data = data + '</soap:Envelope>';
+xmlhttp = getXMLHttpRequest();
+var URL="http://59.64.156.153:9763/services/jsmk.SOAP12Endpoint";
+xmlhttp.open("POST",URL, false);
+xmlhttp.setRequestHeader ("Content-Type","text/xml; charset=utf-8");
+xmlhttp.setRequestHeader ("SOAPAction","urn:getRepo");
+xmlhttp.send(data);
+get_data(xmlhttp.responseXML);
+}
+
+function getXMLHttpRequest() 
+{
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else {
+        try {
+            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+        }
+        catch(ex) {
+            return null;
+        }
+    }
+}
+
+function get_id(xml){
+
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("id");
+  for(i=0;i<elements.length;i++){
+	  
+  	var outDiv = document.createElement("div");
+  	outDiv.className="ui-block-a";
+  	document.getElementById("result").appendChild(outDiv);
+  	var inDiv = document.createElement("div");
+  	inDiv.className="ui-bar ui-bar-b";
+  	inDiv.innerHTML=elements[i].firstChild.nodeValue;
+  	outDiv.appendChild(inDiv);
+}
+}
+function get_data(xml){
+  var xmlDoc = xml;
+  var root = xmlDoc.documentElement;
+  var elements = root.getElementsByTagName("id");
+  for(i=0;i<elements.length;i++){
+
+	var nameElements = root.getElementsByTagName("id");
+    var listDiv = document.createElement("div");
+	listDiv.className="showdatalistview";
+	document.getElementById("result").appendChild(listDiv);
+
+  	var outDiv = document.createElement("div");
+  	outDiv.className="ui-block-a";
+  	
+  	listDiv.appendChild(outDiv);
+    var inDiv = document.createElement("div");
+    inDiv.className="ui-bar ui-bar-b dataheight";
+  	
+    inDiv.innerHTML=nameElements[i].firstChild.nodeValue;
+  	outDiv.appendChild(inDiv);
+
+  	
+ /**********/ 	
+  	var nameElements = root.getElementsByTagName("name");
+  	var outDiv = document.createElement("div");
+  	outDiv.className="ui-block-b";
+  	
+  	listDiv.appendChild(outDiv);
+  	var inDiv = document.createElement("div");
+    inDiv.className="ui-bar ui-bar-b dataheight";
+    
+    inDiv.innerHTML=nameElements[i].firstChild.nodeValue;
+  	outDiv.appendChild(inDiv);
+ /***********/
+  	var nameElements = root.getElementsByTagName("value");
+  	var outDiv = document.createElement("div");
+  	outDiv.className="ui-block-c";
+  	
+  	listDiv.appendChild(outDiv);
+    var inDiv = document.createElement("div");
+    inDiv.className="ui-bar ui-bar-b dataheight";
+    
+  	inDiv.innerHTML=nameElements[i].firstChild.nodeValue;
+  	outDiv.appendChild(inDiv);
+  	
+  /************/	
+  	var nameElements = root.getElementsByTagName("date");
+  	var outDiv = document.createElement("div");
+  	outDiv.className="ui-block-d";
+  	
+  	listDiv.appendChild(outDiv);
+  	var inDiv = document.createElement("div");
+  	inDiv.className="ui-bar ui-bar-b dataheight";
+  	
+  	inDiv.innerHTML=nameElements[i].firstChild.nodeValue;
+  	outDiv.appendChild(inDiv);
+  /*****************/	
+  }
+}
+</script>
+</head>
+<body>
+	<div data-role="page" class="indexpage" id="page-about">
+		<div class="jqmheader" data-role="header" data-position="inline">
+		<div class="titletext"><span>按照库存查询（单位：t）</span></div>
+	</div>
+	<div data-role="page" class="type-index" id="page-about">
+		<script type="text/javascript">
+		$(document).ready (
+			function ()
+			{
+				RequestByPost();
+			}
+		);
+		</script>
+	</div>	
+	<p>&nbsp;
+	<div data-role="content" data-inset="true">	
+	    <div class="ui-grid-d" id="result"> 
+	           <div class="showdatalistview"> 
+				<div class="ui-block-a"><div class="ui-bar ui-bar-e titleheight">货物编号</div></div> 
+				<div class="ui-block-b"><div class="ui-bar ui-bar-e titleheight">货物名称</div></div>
+				<div class="ui-block-c"><div class="ui-bar ui-bar-e titleheight">库存容量</div></div> 
+				<div class="ui-block-d"><div class="ui-bar ui-bar-e titleheight">查询日期</div></div>
+                   </div>
+	    </div>
+	</div>
+  </div>
+</body>
+</html>
